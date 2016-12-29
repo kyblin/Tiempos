@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -25,12 +26,13 @@ public class lectura {
         
         
         ArrayList lista = new ArrayList<String>();
+        StringTokenizer mytoken;
         String line=null;
         String[] cadenas;
-        int cb=0;
+        String[] str= new String[7];
         int ctr=0;
-        int co=0;
         int cm=0;
+        int i=0;
         
            
         BufferedReader io = new BufferedReader(new FileReader("C:\\Users\\xoq5f10\\Desktop\\test.xls"));
@@ -50,20 +52,24 @@ public class lectura {
         for (int j=0; j<cadenas.length; j++) {
             
             
-            if(!(cadenas[j].indexOf("<tr>")== -1)){
+            if(!(cadenas[j].indexOf("<tr")== -1)){
                 ctr++;//System.out.println(cadenas[j]+"////"+ctr+"***"+j);
             }
-            else if(!(cadenas[j].indexOf("<b>")== -1)){
-                cb++;//System.out.println(cadenas[j]+"////"+cb+"***"+j);
-            }
-            else {co++;//System.out.println(cadenas[j]+"////"+co+"***"+j);
-            }
-            if(j==25||j==36){
-                System.out.println(cadenas[j]);
+            
+            if(ctr==3&& (cadenas[j].contains("<b>"))){
+                mytoken = new StringTokenizer((cadenas[j].replaceAll("<b>","").replaceAll("</b>","")));
+                while(mytoken.hasMoreTokens()){
+                    str[i]=mytoken.nextToken();
+                    i++;
+                }
+                System.out.println(str[1]+" "+str[2]);
             }
             if(ctr==4 && (cadenas[j].contains("<b>"))&&(!cadenas[j].contains("Fecha"))){
+               System.out.println(cadenas[j].replaceAll("<b>","").replaceAll("</b>",""));
+               cm++;
+            }
+            if(ctr==6 && (!cadenas[j].contains("td"))&&cadenas[j].length()!=0&&(!cadenas[j].contains("tr"))){
                 System.out.println(cadenas[j]);
-                cm++;
             }
             
             
