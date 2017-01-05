@@ -85,6 +85,7 @@ public class lectura {
 
                 String[][] tiempos;
                 String[][] general=new String[1][4];
+                String[][] total;
                 String stt=null;
                 String fecha=null;
                 String[] promediop;
@@ -154,16 +155,27 @@ public class lectura {
                 }
                 
                 promediop=p.promedio(tiempos);
+                
+                total = new String[cm+1][4];
+                
+                for(int w=0; w<tiempos.length; w++){
+                    for(int z=0; z<tiempos[w].length; z++){
+                        total[w][z]=tiempos[w][z];
+                    }
+                }
+                
                 for(String promedio:promediop){
-                    general[0][j]=promedio;
+                    total[cm][j]=promedio;
                     j++;
                 }
+                
+                
                             
                 myTiempos.jLabel2.setText(stt);
                 myTiempos.jLabel4.setText(fecha);
                 
                 myTiempos.jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    tiempos,
+                    total,
                     new String [] {
                         "Marca", "TPE", "TPA", "Clientes"
                     }
@@ -177,22 +189,6 @@ public class lectura {
                     }
                 });
                 
-                myTiempos.jTable2.setModel(new javax.swing.table.DefaultTableModel(
-                    general,
-                    new String [] {
-                        "Marca", "TPE", "TPA", "Clientes"
-                    }
-                ) {
-                    boolean[] canEdit = new boolean [] {
-                        false, false, false, false
-                    };
-
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return canEdit [columnIndex];
-                    }
-                });
-
-               
                 myTiempos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 myTiempos.setVisible(true);
                 
